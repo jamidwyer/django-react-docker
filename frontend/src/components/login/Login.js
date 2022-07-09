@@ -3,8 +3,8 @@ import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
-import { Container, Button, Row, Col, Form } from "react-bootstrap";
-
+import { Container, Row, Col, Form } from "react-bootstrap";
+import { Button, Title } from "@jamidwyer/react-web-ui";
 import { login } from "./LoginActions.js";
 
 class Login extends Component {
@@ -12,17 +12,17 @@ class Login extends Component {
     super(props);
     this.state = {
       email: "",
-      password: ""
+      password: "",
     };
   }
-  onChange = e => {
+  onChange = (e) => {
     this.setState({ [e.target.name]: e.target.value });
   };
 
   onLoginClick = () => {
     const userData = {
       email: this.state.email,
-      password: this.state.password
+      password: this.state.password,
     };
     this.props.login(userData, "/dashboard");
   };
@@ -31,7 +31,7 @@ class Login extends Component {
       <Container>
         <Row>
           <Col md="4">
-            <h1>Login</h1>
+            <Title title="Login" />
             <Form>
               <Form.Group controlId="emailId">
                 <Form.Label>Your Email</Form.Label>
@@ -55,9 +55,14 @@ class Login extends Component {
                 />
               </Form.Group>
             </Form>
-            <Button color="primary" onClick={this.onLoginClick}>
-              Login
-            </Button>
+            <Button
+              color="primary"
+              id="1bv"
+              onClick={this.onLoginClick}
+              title="hi"
+              name="Log In"
+              url={"://google.com"}
+            />
             <p className="mt-2">
               Don't have account? <Link to="/signup">Signup</Link>
             </p>
@@ -75,13 +80,13 @@ class Login extends Component {
 //export default Login;
 Login.propTypes = {
   login: PropTypes.func.isRequired,
-  auth: PropTypes.object.isRequired
+  auth: PropTypes.object.isRequired,
 };
 
-const mapStateToProps = state => ({
-  auth: state.auth
+const mapStateToProps = (state) => ({
+  auth: state.auth,
 });
 
 export default connect(mapStateToProps, {
-  login
+  login,
 })(withRouter(Login));

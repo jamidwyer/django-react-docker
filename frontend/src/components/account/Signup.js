@@ -1,18 +1,11 @@
 import React, { Component } from "react";
 import { withRouter, Link } from "react-router-dom";
 import { connect } from "react-redux";
+import { Button, Title } from "@jamidwyer/react-web-ui";
 
 import axios from "axios";
 import { setAxiosAuthToken } from "../../utils/Utils";
-import {
-  Alert,
-  Container,
-  Button,
-  Row,
-  Col,
-  Form,
-  FormControl
-} from "react-bootstrap";
+import { Alert, Container, Row, Col, Form, FormControl } from "react-bootstrap";
 
 class Signup extends Component {
   constructor(props) {
@@ -24,10 +17,10 @@ class Signup extends Component {
       usernameError: "",
       passwordError: "",
       emailError: "",
-      status: ""
+      status: "",
     };
   }
-  onChange = e => {
+  onChange = (e) => {
     this.setState({ [e.target.name]: e.target.value });
   };
 
@@ -36,22 +29,22 @@ class Signup extends Component {
       usernameError: "",
       emailError: "",
       passwordError: "",
-      status: ""
+      status: "",
     });
 
     const userData = {
       username: this.state.username,
       password: this.state.password,
-      email: this.state.email
+      email: this.state.email,
     };
 
     setAxiosAuthToken(""); // send request with empty token
     axios
       .post("/api/v1/users/", userData)
-      .then(response => {
+      .then((response) => {
         this.setState({ status: "success" });
       })
-      .catch(error => {
+      .catch((error) => {
         if (error.response) {
           if (error.response.data.hasOwnProperty("username")) {
             this.setState({ usernameError: error.response.data["username"] });
@@ -136,8 +129,8 @@ class Signup extends Component {
             </Form.Control.Feedback>
           </Form.Group>
         </Form>
-        <Button color="primary" onClick={this.onSignupClick}>
-          Sign up
+        <Button color="primary" name="Sign Up" onClick={this.onSignupClick}>
+          Sign Up
         </Button>
       </div>
     );
@@ -153,7 +146,7 @@ class Signup extends Component {
       <Container>
         <Row>
           <Col md="6">
-            <h1>Sign up</h1>
+            <Title title="Sign Up" />
             {alert}
             {this.state.status !== "success" && form}
             <p className="mt-2">
@@ -168,6 +161,6 @@ class Signup extends Component {
 
 Signup.propTypes = {};
 
-const mapStateToProps = state => ({});
+const mapStateToProps = (state) => ({});
 
 export default connect(mapStateToProps)(withRouter(Signup));
